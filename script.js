@@ -143,9 +143,9 @@ const contentData = [
         rating:9.5,
         pdfLink:"assets/pdfs/DSA_Notes_Full.pdf",
         modules:[
-            { title: "Module 1: Basic Data Structures", pdfLink: "assets/pdfs/3RD-SEM/M-1.pdf" },
-            { title: "Module 2: Advanced Data Structures", pdfLink: "assets/pdfs/3RD-SEM/M-2.pdf" },
-            { title: "Module 3: Algorithms and Analysis", pdfLink: "assets/pdfs/3RD-SEM/M-3.pdf" },
+            { title: "Module 1: Basic Data Structures", pdfLink: "assets/pdfs/3RD-SEM/DSA/M-1.pdf" },
+            { title: "Module 2: Advanced Data Structures", pdfLink: "assets/pdfs/3RD-SEM/DSA/M-2.pdf" },
+            { title: "Module 3: Algorithms and Analysis", pdfLink: "assets/pdfs/3RD-SEM/DSA/M-3.pdf" },
             { title: "MCQ: CA3", pdfLink:"" },
         ]
     },

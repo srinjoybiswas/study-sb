@@ -3,126 +3,118 @@ let isLoggedIn = false;
 let loggedInUserName = "";
 const MAX_FREE_VIEWS = 5;
 
-
-// 1. Master list of authorized students (Roll No. must be exact, Name comparison is now robust)
+// 1. Master list of authorized students with hardcoded College Email IDs
 const authorizedStudents = [
-    { roll: "184216", name: "Abhigyan biswas" },
-    //{ roll: "184266", name: "ABHINANDAN PAUL" },
-    { roll: "1842132", name: "Abhirup Bhattacharya" },
-    { roll: "184239", name: "ABHIRUP GHOSH" },
-    //{ roll: "1842108", name: "Aditi Kamila" },
-    { roll: "1842142", name: "Aditya Alok" },
-    { roll: "184242", name: "ADITYA SEN" },
-    { roll: "184251", name: "ADRITA PAUL" },
-    { roll: "184205", name: "Aishani Gupta" },
-    { roll: "184243", name: "AKASH DAS" },
-    { roll: "1842143", name: "ALOK KUMAR PANDEY" },
-    { roll: "1842148", name: "ANANBADYO DAS" },
-    { roll: "1842144", name: "ANAND KUMAR SHAW" },
-    { roll: "184231", name: "ANIRBAN MONDAL" },
-    { roll: "184204", name: "ANJASH KAR" },
-    { roll: "184258", name: "ANKITA BANERJEE" },
-    { roll: "184214", name: "ankita sardar" },
-    { roll: "184229", name: "ANUBHAV BAGCHI" },
-    { roll: "1842113", name: "Anwesha paul" },
-    { roll: "1842123", name: "arjeeta Chakraborty" },
-    { roll: "184255", name: "ARKO BANERJEE" },
-    { roll: "1842151", name: "ARYA MUKHOPADHYAY" },
-    { roll: "1842131", name: "Aryan Shaw" },
-    { roll: "1842145", name: "ASIT KUMAR BARIK" },
-    { roll: "184276", name: "AYAN KUMAR SAHOO" },
-    { roll: "184217", name: "bhakti kothari" },
-    { roll: "1842136", name: "Bidisha Baidya" },
-    { roll: "184249", name: "BRISTI MONDAL" },
-    { roll: "1842107", name: "Debadrita Dutta" },
-    { roll: "184297", name: "DEBAMITA SINHA" },
-    { roll: "1842133", name: "Debapriya Giri" },
-    { roll: "1842141", name: "Debarghya Poddar" },
-    { roll: "1842109", name: "Deppankar shaw" },
-    { roll: "1842118", name: "Deti Ray" },
-    { roll: "1842124", name: "Dipsikha Banerjee" },
-    { roll: "184209", name: "Dristi Patel" },
-    { roll: "1842105", name: "FAIZ KHAN" },
-    { roll: "184206", name: "Jagnik Dhar" },
-    { roll: "184256", name: "JAISMINE JAISWAL" },
-    { roll: "1842129", name: "Jayashree Dey" },
-    { roll: "184223", name: "Jenia Parveen" },
-    { roll: "1842128", name: "Kaushal Khandelwal" },
-    { roll: "1842121", name: "Kaustav Sadhu" },
-    { roll: "184287", name: "Khadija Indorewala" },
-    { roll: "184212", name: "Krish Viradiya" },
-    { roll: "184237", name: "MAHARGHYA SARKAR" },
-    //{ roll: "184246", name: "MANONIYA MAJUMDER" },
-    { roll: "184265", name: "MD ALTAF HOSSAIN" },
-    { roll: "1842137", name: "Md Arbaz" },
-    { roll: "184236", name: "MD KAIF ALI" },
-    { roll: "184282", name: "MIRAJ HOSSAIN" },
-    { roll: "1842130", name: "Mohmmad Irfan" },
-    { roll: "184269", name: "MOUSUMI BAIDYA" },
-    { roll: "184235", name: "NABHONEEL KAR" },
-    { roll: "184215", name: "nadeem khan" },
-    { roll: "1842122", name: "Nandita Pramanik" },
-    { roll: "184260", name: "NEHA SINGH" },
-    { roll: "184219", name: "NILANKO DAS" },
-    { roll: "184213", name: "nimisha biswas" },
-    { roll: "184230", name: "NIRJHAR BAKSH" },
-    { roll: "184280", name: "PRANESHA DUTTA" },
-    { roll: "184270", name: "NITAL KUMAR" },
-    { roll: "1842138", name: "KASAF MAKSUD" },
-    { roll: "1842117", name: "VIKAS KUMAR RAY" },
-    { roll: "184241", name: "PURBITA KARMAKAR" },
-    { roll: "184234", name: "PUSHKAR SHAW" },
-    { roll: "1842110", name: "SAGNIK SAHA" },
-    { roll: "184228", name: "SANIYA KUMARI SINGH" },
-    { roll: "184250", name: "PARTHA DAS" },
-    { roll: "184285", name: "PIYUSH SINGH" },
-    { roll: "1842120", name: "POUSALI CHATTERJEE" },
-    { roll: "184222", name: "PRATYUSHA SHARMA" },
-    { roll: "184232", name: "PRINCE JHA" },
-    { roll: "184284", name: "PRIYANKA SAMANTA" },
-    { roll: "1842127", name: "RANA GHOSH" },
-    { roll: "1842116", name: "RITORMI GHOSH" },
-    { roll: "184240", name: "RUPAM BHOWMICK" },
-    { roll: "184268", name: "RUPSA GHOSH" },
-    { roll: "184272", name: "SATYAKI HAZRA" },
-    { roll: "184290", name: "SHARBANI MITRA" },
-    { roll: "184245", name: "SHINJINI BHATTACHARJEE" },
-    { roll: "1842101", name: "SHRESTH MADANI" },
-    { roll: "1842147", name: "SHREYA SAHOO" },
-    { roll: "184233", name: "SHREYAS GHOSH" },
-    { roll: "184298", name: "SNEHA SHAW" },
-  //  { roll: "184277", name: "SOHAM SAHA" },
-    { roll: "184264", name: "SOUMILI GHOSH" },
-    { roll: "184210", name: "SOUMITA DAS" },
-    { roll: "184254", name: "SOUNAK GHOSH" },
-    { roll: "1842146", name: "SOURAB GUPTA" },
-    { roll: "184299", name: "SOURODEEP SARKAR" },
-    { roll: "184218", name: "SOUVIK MONDAL" },
-    //{ roll: "184279", name: "SREEJA CHAKRABARTY" },
-    { roll: "1842102", name: "SRINJOY BISWAS" },
-    { roll: "184252", name: "SUBHADIP KAR" },
-    { roll: "184289", name: "SUBHAJIT SAMANTA" },
-    { roll: "1842125", name: "SUBHAM KUMAR PANDEY" },
-  //  { roll: "1842150", name: "SUGANDHA SINGH" },
-    { roll: "184247", name: "SUMIT MAHATO" },
-    { roll: "184211", name: "SUPRATIM SAHA" },
-    { roll: "184271", name: "SWASTICKA NANDY" },
-    { roll: "184288", name: "SWATI KUMARI SAH" },
-    { roll: "1842149", name: "TANISHA GUPTA" },
-    { roll: "184267", name: "TANISHA SHAW" },
-    { roll: "184238", name: "TANNISHTHA BERA" },
-    { roll: "1842103", name: "UDITA GUHA" },
-    { roll: "184281", name: "SANJANA GHOSH" },
-    { roll: "184225", name: "RAJOSHREE DAS" },
-    { roll: "184201", name: "SOUMYAJIT NAIYA" },
-    //{ roll: "184295", name: "RWITIKA SARKAR" },
-    { roll: "1842100", name: "PRIYANSHU MONDAL" },
-    { roll: "1842140", name: "ROHIT PRASAD" },
-    { roll: "1842135", name: "Shubham Ray" },
-    { roll: "1842126", name: "SOHAM SARKAR" },
-    { roll: "184257", name: "SOUMYA PRATIM SARKAR" },
-    { roll: "184208", name: "Prithbi Raj Ghosh" },
-    { roll: "184203", name: "SNEHA DUTTA" }
+    { roll: "184216", name: "Abhigyan biswas", email: "abhigyan.biswas@tha.edu.in" },
+    { roll: "1842132", name: "Abhirup Bhattacharya", email: "abhirup.bhattacharya@tha.edu.in" },
+    { roll: "184239", name: "ABHIRUP GHOSH", email: "abhirup.ghosh@tha.edu.in" },
+    { roll: "1842142", name: "Aditya Alok", email: "aditya.alok@tha.edu.in" },
+    { roll: "184242", name: "ADITYA SEN", email: "aditya.sen@tha.edu.in" },
+    { roll: "184251", name: "ADRITA PAUL", email: "adrita.paul@tha.edu.in" },
+    { roll: "184205", name: "Aishani Gupta", email: "aishani.gupta@tha.edu.in" },
+    { roll: "184243", name: "AKASH DAS", email: "akash.das@tha.edu.in" },
+    { roll: "1842143", name: "ALOK KUMAR PANDEY", email: "alok.kumar.pandey@tha.edu.in" },
+    { roll: "1842148", name: "ANANBADYO DAS", email: "ananbadyo.das@tha.edu.in" },
+    { roll: "1842144", name: "ANAND KUMAR SHAW", email: "anand.kumar.shaw@tha.edu.in" },
+    { roll: "184231", name: "ANIRBAN MONDAL", email: "anirban.mondal@tha.edu.in" },
+    { roll: "184204", name: "ANJASH KAR", email: "anjash.kar@tha.edu.in" },
+    { roll: "184258", name: "ANKITA BANERJEE", email: "ankita.banerjee@tha.edu.in" },
+    { roll: "184214", name: "ankita sardar", email: "ankita.sardar@tha.edu.in" },
+    { roll: "184229", name: "ANUBHAV BAGCHI", email: "anubhav.bagchi@tha.edu.in" },
+    { roll: "1842113", name: "Anwesha paul", email: "anwesha.paul@tha.edu.in" },
+    { roll: "1842123", name: "arjeeta Chakraborty", email: "arjeeta.chakraborty@tha.edu.in" },
+    { roll: "184255", name: "ARKO BANERJEE", email: "arko.banerjee@tha.edu.in" },
+    { roll: "1842151", name: "ARYA MUKHOPADHYAY", email: "arya.mukhopadhyay@tha.edu.in" },
+    { roll: "1842131", name: "Aryan Shaw", email: "aryan.shaw@tha.edu.in" },
+    { roll: "1842145", name: "ASIT KUMAR BARIK", email: "asit.kumar.barik@tha.edu.in" },
+    { roll: "184276", name: "AYAN KUMAR SAHOO", email: "ayan.kumar.sahoo@tha.edu.in" },
+    { roll: "184217", name: "bhakti kothari", email: "bhakti.kothari@tha.edu.in" },
+    { roll: "1842136", name: "Bidisha Baidya", email: "bidisha.baidya@tha.edu.in" },
+    { roll: "184249", name: "BRISTI MONDAL", email: "bristi.mondal@tha.edu.in" },
+    { roll: "1842107", name: "Debadrita Dutta", email: "debadrita.dutta@tha.edu.in" },
+    { roll: "184297", name: "DEBAMITA SINHA", email: "debamita.sinha@tha.edu.in" },
+    { roll: "1842133", name: "Debapriya Giri", email: "debapriya.giri@tha.edu.in" },
+    { roll: "1842141", name: "Debarghya Poddar", email: "debarghya.poddar@tha.edu.in" },
+    { roll: "1842109", name: "Deppankar shaw", email: "deppankar.shaw@tha.edu.in" },
+    { roll: "1842118", name: "Deti Ray", email: "deti.ray@tha.edu.in" },
+    { roll: "1842124", name: "Dipsikha Banerjee", email: "dipsikha.banerjee@tha.edu.in" },
+    { roll: "184209", name: "Dristi Patel", email: "dristi.patel@tha.edu.in" },
+    { roll: "1842105", name: "FAIZ KHAN", email: "faiz.khan@tha.edu.in" },
+    { roll: "184206", name: "Jagnik Dhar", email: "jagnik.dhar@tha.edu.in" },
+    { roll: "184256", name: "JAISMINE JAISWAL", email: "jaismine.jaiswal@tha.edu.in" },
+    { roll: "1842129", name: "Jayashree Dey", email: "jayashree.dey@tha.edu.in" },
+    { roll: "184223", name: "Jenia Parveen", email: "jenia.parveen@tha.edu.in" },
+    { roll: "1842128", name: "Kaushal Khandelwal", email: "kaushal.khandelwal@tha.edu.in" },
+    { roll: "1842121", name: "Kaustav Sadhu", email: "kaustav.sadhu@tha.edu.in" },
+    { roll: "184287", name: "Khadija Indorewala", email: "khadija.indorewala@tha.edu.in" },
+    { roll: "184212", name: "Krish Viradiya", email: "krish.viradiya@tha.edu.in" },
+    { roll: "184237", name: "MAHARGHYA SARKAR", email: "mahargya.sarkar@tha.edu.in" },
+    { roll: "184265", name: "MD ALTAF HOSSAIN", email: "md.altaf.hossain@tha.edu.in" },
+    { roll: "1842137", name: "Md Arbaz", email: "md.arbaz@tha.edu.in" },
+    { roll: "184236", name: "MD KAIF ALI", email: "md.kaif.ali@tha.edu.in" },
+    { roll: "184282", name: "MIRAJ HOSSAIN", email: "miraj.hossain@tha.edu.in" },
+    { roll: "1842130", name: "Mohmmad Irfan", email: "mohmmad.irfan@tha.edu.in" },
+    { roll: "184269", name: "MOUSUMI BAIDYA", email: "mousumi.baidya@tha.edu.in" },
+    { roll: "184235", name: "NABHONEEL KAR", email: "nabhoneel.kar@tha.edu.in" },
+    { roll: "184215", name: "nadeem khan", email: "nadeem.khan@tha.edu.in" },
+    { roll: "1842122", name: "Nandita Pramanik", email: "nandita.pramanik@tha.edu.in" },
+    { roll: "184260", name: "NEHA SINGH", email: "neha.singh@tha.edu.in" },
+    { roll: "184219", name: "NILANKO DAS", email: "nilanko.das@tha.edu.in" },
+    { roll: "184213", name: "nimisha biswas", email: "nimisha.biswas@tha.edu.in" },
+    { roll: "184230", name: "NIRJHAR BAKSH", email: "nirjhar.baksh@tha.edu.in" },
+    { roll: "184280", name: "PRANESHA DUTTA", email: "pranesha.dutta@tha.edu.in" },
+    { roll: "184270", name: "NITAL KUMAR", email: "nital.kumar@tha.edu.in" },
+    { roll: "1842138", name: "KASAF MAKSUD", email: "kasaf.maksud@tha.edu.in" },
+    { roll: "1842117", name: "VIKAS KUMAR RAY", email: "vikas.kumar.ray@tha.edu.in" },
+    { roll: "184241", name: "PURBITA KARMAKAR", email: "purbita.karmakar@tha.edu.in" },
+    { roll: "184234", name: "PUSHKAR SHAW", email: "pushkar.shaw@tha.edu.in" },
+    { roll: "1842110", name: "SAGNIK SAHA", email: "sagnik.saha@tha.edu.in" },
+    { roll: "184228", name: "SANIYA KUMARI SINGH", email: "saniya.kumari.singh@tha.edu.in" },
+    { roll: "184250", name: "PARTHA DAS", email: "partha.das@tha.edu.in" },
+    { roll: "184285", name: "PIYUSH SINGH", email: "piyush.singh@tha.edu.in" },
+    { roll: "1842120", name: "POUSALI CHATTERJEE", email: "pousali.chatterjee@tha.edu.in" },
+    { roll: "184222", name: "PRATYUSHA SHARMA", email: "pratyusha.sharma@tha.edu.in" },
+    { roll: "184232", name: "PRINCE JHA", email: "prince.jha@tha.edu.in" },
+    { roll: "184284", name: "PRIYANKA SAMANTA", email: "priyanka.samanta@tha.edu.in" },
+    { roll: "1842127", name: "RANA GHOSH", email: "rana.ghosh@tha.edu.in" },
+    { roll: "1842116", name: "RITORMI GHOSH", email: "ritormi.ghosh@tha.edu.in" },
+    { roll: "184240", name: "RUPAM BHOWMICK", email: "rupam.bhowmick@tha.edu.in" },
+    { roll: "184268", name: "RUPSA GHOSH", email: "rupsa.ghosh@tha.edu.in" },
+    { roll: "184272", name: "SATYAKI HAZRA", email: "satyaki.hazra@tha.edu.in" },
+    { roll: "184290", name: "SHARBANI MITRA", email: "sharbani.mitra@tha.edu.in" },
+    { roll: "184245", name: "SHINJINI BHATTACHARJEE", email: "shinjini.bhattacharjee@tha.edu.in" },
+    { roll: "1842101", name: "SHRESTH MADANI", email: "shresth.madani@tha.edu.in" },
+    { roll: "1842147", name: "SHREYA SAHOO", email: "shreya.sahoo@tha.edu.in" },
+    { roll: "184233", name: "SHREYAS GHOSH", email: "shreyas.ghosh@tha.edu.in" },
+    { roll: "184298", name: "SNEHA SHAW", email: "sneha.shaw@tha.edu.in" },
+    { roll: "184264", name: "SOUMILI GHOSH", email: "soumili.ghosh@tha.edu.in" },
+    { roll: "184210", name: "SOUMITA DAS", email: "soumita.das@tha.edu.in" },
+    { roll: "184254", name: "SOUNAK GHOSH", email: "sounak.ghosh@tha.edu.in" },
+    { roll: "1842146", name: "SOURAB GUPTA", email: "sourab.gupta@tha.edu.in" },
+    { roll: "184299", name: "SOURODEEP SARKAR", email: "sourodeep.sarkar@tha.edu.in" },
+    { roll: "184218", name: "SOUVIK MONDAL", email: "souvik.mondal@tha.edu.in" },
+    { roll: "1842102", name: "SRINJOY BISWAS", email: "srinjoy.biswas@tha.edu.in" },
+    { roll: "184252", name: "SUBHADIP KAR", email: "subhadip.kar@tha.edu.in" },
+    { roll: "184289", name: "SUBHAJIT SAMANTA", email: "subhajit.samanta@tha.edu.in" },
+    { roll: "1842125", name: "SUBHAM KUMAR PANDEY", email: "subham.kumar.pandey@tha.edu.in" },
+    { roll: "184247", name: "SUMIT MAHATO", email: "sumit.mahato@tha.edu.in" },
+    { roll: "184211", name: "SUPRATIM SAHA", email: "supratim.saha@tha.edu.in" },
+    { roll: "184271", name: "SWASTICKA NANDY", email: "swasticka.nandy@tha.edu.in" },
+    { roll: "184288", name: "SWATI KUMARI SAH", email: "swati.kumari.sah@tha.edu.in" },
+    { roll: "1842149", name: "TANISHA GUPTA", email: "tanisha.gupta@tha.edu.in" },
+    { roll: "184267", name: "TANISHA SHAW", email: "tanisha.shaw@tha.edu.in" },
+    { roll: "184238", name: "TANNISHTHA BERA", email: "tannishttha.bera@tha.edu.in" },
+    { roll: "1842103", name: "UDITA GUHA", email: "udita.guha@tha.edu.in" },
+    { roll: "184281", name: "SANJANA GHOSH", email: "sanjana.ghosh@tha.edu.in" },
+    { roll: "184225", name: "RAJOSHREE DAS", email: "rajoshree.das@tha.edu.in" },
+    { roll: "184201", name: "SOUMYAJIT NAIYA", email: "soumyajit.naiya@tha.edu.in" },
+    { roll: "1842100", name: "PRIYANSHU MONDAL", email: "priyanshu.mondal@tha.edu.in" },
+    { roll: "1842140", name: "ROHIT PRASAD", email: "rohit.prasad@tha.edu.in" },
+    { roll: "1842135", name: "Shubham Ray", email: "shubham.ray@tha.edu.in" },
+    { roll: "1842126", name: "SOHAM SARKAR", email: "soham.sarkar@tha.edu.in" },
+    { roll: "184257", name: "SOUMYA PRATIM SARKAR", email: "soumya.pratim.sarkar@tha.edu.in" },
+    { roll: "184208", name: "Prithbi Raj Ghosh", email: "prithbi.raj.ghosh@tha.edu.in" },
+    { roll: "184203", name: "SNEHA DUTTA", email: "sneha.dutta@tha.edu.in" }
 ];
 
 const contentData = [
@@ -325,17 +317,25 @@ function closeLoginModal() {
     document.getElementById('loginModal').style.display = 'none';
 }
 
+// --- NEW FUNCTION: Custom Error Card Simulation ---
+function showErrorCard(message) {
+    // This simulates a custom error card reflecting the login failure details.
+    const styledMessage = `❌ Authentication Error ❌\n\n${message}`;
+    alert(styledMessage);
+}
+// --- END NEW FUNCTION ---
+
 /**
- * 2. MODIFIED performLogin function for strict RollNo/Name check
+ * MODIFIED performLogin function for strict RollNo/Name/Email check
  */
 function performLogin() {
     // Trim and normalize inputs
     const nameInput = document.getElementById('loginName').value.trim();
     const rollInput = document.getElementById('loginRoll').value.trim();
-    const emailInput = document.getElementById('loginEmail').value.trim();
+    const emailInput = document.getElementById('loginEmail').value.trim(); // Get the email input
 
     if (!nameInput || !rollInput || !emailInput) {
-        alert("All login fields are required.");
+        showErrorCard("All login fields (Name, Roll, College Email) are required.");
         return;
     }
 
@@ -343,21 +343,27 @@ function performLogin() {
     const normalizedInputName = nameInput.toLowerCase().replace(/\s/g, '');
     
     // --- AUTHENTICATION LOGIC ---
-    const isAuthorized = authorizedStudents.some(student => {
-        // Roll must be an EXACT match
+    let matchedStudent = null;
+
+    authorizedStudents.forEach(student => {
+        // 1. Roll must be an EXACT match
         const rollMatch = student.roll === rollInput;
         
-        // Normalize student data name: lowercase and remove all internal whitespace
+        // 2. Name must match after normalization (handles case and extra spaces)
         const normalizedStudentName = student.name.toLowerCase().replace(/\s/g, '');
-        
-        // Name must match after normalization (handles case and extra spaces)
         const nameMatch = normalizedStudentName === normalizedInputName;
+
+        // 3. Email must be an EXACT match (case-insensitive check)
+        const emailMatch = student.email.toLowerCase() === emailInput.toLowerCase();
         
-        return rollMatch && nameMatch;
+        // Final check: All three must match
+        if (rollMatch && nameMatch && emailMatch) {
+            matchedStudent = student;
+        }
     });
 
-    if (!isAuthorized) {
-        alert("Login Failed: Your University Roll No. and Full Name combination does not match our authorized student list. Please check for spelling, capitalization, and roll number accuracy.");
+    if (!matchedStudent) {
+        showErrorCard("Login Failed: The combination of your University Roll No., Full Name, and College Email ID does not match our authorized student records. Please ensure all details are correct.");
         return;
     }
     
@@ -372,11 +378,12 @@ function performLogin() {
     loginButton.onclick = () => alert(`You are logged in as ${loggedInUserName}.`);
 
     closeLoginModal();
-    alert(`Welcome, ${nameInput}! Access granted. You are now logged in.`);
+    alert(`✅ Welcome, ${nameInput}! Access granted. You are now logged in.`);
     
     // Set the user name for the watermarking step
     document.getElementById('userName').value = nameInput;
 }
+
 
 /* --- Subject/Module Modals --- */
 function showModuleModal(subject) {
@@ -496,6 +503,7 @@ window.closeLoginModal = closeLoginModal;
 window.showLoginModal = showLoginModal;
 window.performLogin = performLogin;
 window.closePdfViewerModal = closePdfViewerModal; 
+window.showErrorCard = showErrorCard;
 
 
 /**
@@ -530,7 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (event.target == modal) {
                 modal.style.display = "none";
                 if (modal.id === 'pdfViewerModal') {
-                       // If the user clicks outside the viewer, clear the content
+                        // If the user clicks outside the viewer, clear the content
                     closePdfViewerModal(); 
                 }
             }

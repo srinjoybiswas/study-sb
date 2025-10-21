@@ -7,7 +7,7 @@ const MAX_FREE_VIEWS = 5;
 // 1. Master list of authorized students (Roll No. must be exact, Name comparison is now robust)
 const authorizedStudents = [
     { roll: "184216", name: "Abhigyan biswas" },
-    { roll: "184266", name: "ABHINANDAN PAUL" },
+    //{ roll: "184266", name: "ABHINANDAN PAUL" },
     { roll: "1842132", name: "Abhirup Bhattacharya" },
     { roll: "184239", name: "ABHIRUP GHOSH" },
     //{ roll: "1842108", name: "Aditi Kamila" },

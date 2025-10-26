@@ -114,7 +114,8 @@ const authorizedStudents = [
     { roll: "1842126", name: "SOHAM SARKAR", email: "soham.sarkar@tha.edu.in" },
     { roll: "184257", name: "SOUMYA PRATIM SARKAR", email: "soumya.pratim.sarkar@tha.edu.in" },
     { roll: "184208", name: "Prithbi Raj Ghosh", email: "prithbi.raj.ghosh@tha.edu.in" },
-    { roll: "184203", name: "SNEHA DUTTA", email: "sneha.dutta@tha.edu.in" }
+    { roll: "184203", name: "SNEHA DUTTA", email: "sneha.dutta@tha.edu.in" },
+    { roll: "184295", name: "RWITIKA SARKAR", email: "rwitika.sarkar@tha.edu.in" }
 ];
 
 const contentData = [
